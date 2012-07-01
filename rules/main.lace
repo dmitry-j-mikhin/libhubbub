@@ -1,1 +1,23 @@
--- Empty Ruleset
+# Pull up some standard defines for NetSurf
+
+define is_core_dev group netsurf-core
+define at_least_contrib group netsurf-contrib
+
+define is_master ref refs/heads/master
+define is_personal_branch ref ~^refs/heads/${user}/
+
+# First up, the basic write ops
+allow "Core and contrib may push content" op_write at_least_contrib
+
+# Noone may delete master
+deny "Master is sacrosanct" op_deleteref is_master
+
+# Now, allow core/contrib to do normal branch ops on their personal branches
+allow "Core/Contrib may push to personal branches" op_is_normal at_least_contrib is_personal_branch
+allow "Core/Contrib may force-push to personal branches" op_forcedupdate at_least_contrib is_personal_branch
+
+# Allow core to push to master
+allow "Core may push to master" op_is_normal is_core_dev is_master
+
+# Finally allow core to delete branches from anywhere but master
+allow "Core may prune branches" op_deleteref is_core_dev !is_master
