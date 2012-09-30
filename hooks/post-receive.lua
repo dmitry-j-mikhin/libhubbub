@@ -2,7 +2,7 @@
 local repo, updates = ...
 
 empty = "0000000000000000000000000000000000000000"
-
+--[[
 for ref, data in pairs(updates) do
    if ref:sub(1,11) == "refs/heads/" and data.oldsha ~= empty and data.newsha ~= empty then
       log.chat("Informing CIA of commits on", ref:sub(12))
@@ -12,4 +12,4 @@ for ref, data in pairs(updates) do
       log.chat("Not informing CIA about", ref)
    end
 end
-
+]]
