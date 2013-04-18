@@ -1,10 +1,11 @@
-# Pull up some standard defines for NetSurf
+# Pull up some standard defines for the NetSurf Browser Project
 
 define is_core_dev group netsurf-core
 define at_least_contrib group netsurf-contrib
 
 define is_master ref refs/heads/master
 define is_personal_branch ref ~^refs/heads/${user}/
+define is_tag ref ~^refs/tags/
 
 # First up, the basic write ops
 allow "Core and contrib may push content" op_write at_least_contrib
@@ -18,6 +19,9 @@ allow "Core/Contrib may force-push to personal branches" op_forcedupdate at_leas
 
 # Allow core to push to master
 allow "Core may push to master" op_is_normal is_core_dev is_master
+
+# Allow core to push tags
+allow "Core may push tags" op_is_normal is_core_dev is_tag
 
 # Finally allow core to delete branches from anywhere but master
 allow "Core may prune branches" op_deleteref is_core_dev !is_master
