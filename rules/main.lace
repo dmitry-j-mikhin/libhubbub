@@ -6,6 +6,7 @@ define at_least_contrib group netsurf-contrib
 define is_master ref refs/heads/master
 define is_personal_branch ref ~^refs/heads/${user}/
 define is_tag ref ~^refs/tags/
+define is_release_branch ref ~^refs/heads/release/
 
 # First up, the basic write ops
 allow "Core and contrib may push content" op_write at_least_contrib
@@ -22,6 +23,9 @@ allow "Core may push to master" op_is_normal is_core_dev is_master
 
 # Allow core to push tags
 allow "Core may push tags" op_is_normal is_core_dev is_tag
+
+# Allow core to push release branches
+allow "Core may push release branches" op_is_normal is_core_dev is_release_branch
 
 # Finally allow core to delete branches from anywhere but master
 allow "Core may prune branches" op_deleteref is_core_dev !is_master
