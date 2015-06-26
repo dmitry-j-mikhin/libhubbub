@@ -13,3 +13,14 @@ for ref, data in pairs(updates) do
    end
 end
 ]]
+if updates["refs/heads/master"] then
+   log.state("Causing CI update, please wait...")
+   local code, msg, headers, content = http_get("ci.netsurf-browser.org", "/jenkins/git/notifyCommit?url=git://git.netsurf-browser.org/libhubbub.git")
+   if code ~= "200" then
+      log.state("Did not get a 200!")
+   end
+   for line in content:gmatch("([^\r\n]*)\r?\n") do
+      log.state("netsurf-ci: " .. line)
+   end
+end
+
