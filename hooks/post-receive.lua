@@ -15,7 +15,7 @@ end
 ]]
 if updates["refs/heads/master"] then
    log.state("Causing CI update, please wait...")
-   local code, msg, headers, content = http_get("ci.netsurf-browser.org", "/jenkins/git/notifyCommit?url=git://git.netsurf-browser.org/libhubbub.git")
+   local code, msg, headers, content = fetch("https://ci.netsurf-browser.org/jenkins/git/notifyCommit?url=git://git.netsurf-browser.org/libhubbub.git")
    if code ~= "200" then
       log.state("Did not get a 200!")
    end
