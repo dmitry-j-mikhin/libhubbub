@@ -438,7 +438,7 @@ hubbub_error token_handler(const hubbub_token *token, void *pw)
 			/* Expected token only contained part of the data
 			 * Calculate how much is left, then try again with
 			 * the next expected token */
-			hubbub_token t;
+			hubbub_token t = *token;
 
 			t.type = HUBBUB_TOKEN_CHARACTER;
 			t.data.character.ptr += len;
@@ -446,7 +446,7 @@ hubbub_error token_handler(const hubbub_token *token, void *pw)
 
 			ctx->char_off = 0;
 
-			token_handler(&t, pw);
+			return token_handler(&t, pw);
 		} else if (strlen(expstr + ctx->char_off) >
 				token->data.character.len) {
 			/* Tokeniser output only contained part of the data
