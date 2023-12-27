@@ -6,7 +6,7 @@
 
 # Component settings
 COMPONENT := hubbub
-COMPONENT_VERSION := 0.3.7
+COMPONENT_VERSION := 0.3.8
 # Default to a static library
 COMPONENT_TYPE ?= lib-static
 
