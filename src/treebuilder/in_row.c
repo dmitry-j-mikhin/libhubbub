@@ -57,10 +57,12 @@ static hubbub_error act_as_if_end_tag_tr(hubbub_treebuilder *treebuilder)
 
 	table_clear_stack(treebuilder);
 
-	element_stack_pop(treebuilder, &ns, &otype, &node);
+	if (current_node(treebuilder) != HTML) {
+		element_stack_pop(treebuilder, &ns, &otype, &node);
 
-	treebuilder->tree_handler->unref_node(treebuilder->tree_handler->ctx,
-			node);
+		treebuilder->tree_handler->unref_node(
+				treebuilder->tree_handler->ctx,	node);
+	}
 
 	treebuilder->context.mode = IN_TABLE_BODY;
 
