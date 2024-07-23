@@ -7,10 +7,10 @@
 
 use strict;
 
-use constant ENTITIES_FILE => 'build/Entities';
-use constant ENTITIES_INC  => 'src/tokeniser/entities.inc';
+my $ENTITIES_FILE = $ARGV[0];
+my $ENTITIES_INC  = $ARGV[1];
 
-open(INFILE, "<", ENTITIES_FILE) || die "Unable to open " . ENTITIES_FILE;
+open(INFILE, "<", $ENTITIES_FILE) || die "Unable to open " . $ENTITIES_FILE;
 
 my %entities;
 
@@ -124,7 +124,7 @@ $output .= "static int32_t dict_root = " . $trie->{heapindex} . ";\n";
 
 # Write file out
 
-if (open(EXISTING, "<", ENTITIES_INC)) {
+if (open(EXISTING, "<", $ENTITIES_INC)) {
    local $/ = undef();
    my $now = <EXISTING>;
    undef($output) if ($output eq $now);
@@ -132,7 +132,7 @@ if (open(EXISTING, "<", ENTITIES_INC)) {
 }
 
 if (defined($output)) {
-   open(OUTF, ">", ENTITIES_INC);
+   open(OUTF, ">", $ENTITIES_INC);
    print OUTF $output;
    close(OUTF);
 }
